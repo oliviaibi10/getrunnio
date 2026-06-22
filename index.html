@@ -299,6 +299,66 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
 .footer-links a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s; }
 .footer-links a:hover { color: rgba(255,255,255,.65); }
 .footer-copy { font-size: 11.5px; color: rgba(255,255,255,.2); }
+
+/* ── MOBILE ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .wrap { padding: 0 20px; }
+  .sec { padding: 64px 0; }
+
+  /* Nav */
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+
+  /* Hero */
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-phone { display: none; }
+  .hero-text { padding-bottom: 0; }
+  h1.hero-h { font-size: 52px; letter-spacing: -2px; }
+  p.hero-sub { font-size: 15px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  /* Features */
+  .feat-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Wear */
+  .wear-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+  /* Screenshots */
+  .sc-strip { padding: 32px 20px 0; gap: 16px; }
+  .sc-frame { width: 160px; }
+
+  /* Tipos */
+  .tipos-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Pricing */
+  .pricing-row { grid-template-columns: 1fr; max-width: 100%; }
+
+  /* Timeline */
+  .timeline::before { left: 0; }
+  .t-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0 24px 20px; }
+  .t-ver { text-align: left; padding-right: 0; font-size: 10px; }
+  .t-dot { left: -6px; }
+
+  /* Roadmap */
+  .rm-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Privacy */
+  .priv-pills { grid-template-columns: 1fr; }
+  .priv-table th, .priv-table td { font-size: 12px; padding: 10px 12px 10px 0; }
+
+  /* Footer */
+  .footer-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .footer-links { flex-wrap: wrap; gap: 12px; }
+
+  /* Section headings */
+  h2.h { font-size: 32px; }
+  p.sub { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  .tipos-grid { grid-template-columns: 1fr; }
+  .wear-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
