@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Runnio — Control total de tus zapatillas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS ─────────────────────────────────────── */
+:root {
+  --bg:          #FAFAFA;
+  --bg-warm:     #F5F1EB;
+  --dark:        #181512;
+  --dark-card:   #1D1B18;
+  --card:        #FFFFFF;
+  --ink:         #181512;
+  --sub:         #8A847B;
+  --line:        #ECE7DF;
+  --accent:      #FF5A2C;
+  --accent-soft: #FFEDE5;
+  --fresh:  #1FA86A;
+  --mid:    #E9A100;
+  --high:   #FF7A3C;
+  --retire: #FF4D67;
+  --r: 18px;
+  --r-pill: 999px;
+  --font: 'Hanken Grotesk', system-ui, sans-serif;
+  --mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* ── NAV ─────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 60px;
+  background: rgba(24,21,18,0.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-logo { font-weight: 900; font-size: 18px; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+.nav-logo em { font-style: normal; color: var(--accent); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.45); text-decoration: none; letter-spacing: 0.01em; transition: color .18s; }
+.nav-links a:hover, .nav-links a.act { color: #fff; }
+.nav-cta { background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: var(--r-pill); text-decoration: none; transition: opacity .18s; }
+.nav-cta:hover { opacity: .85; }
+
+/* ── LAYOUT HELPERS ──────────────────────────────── */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+.sec { padding: 96px 0; }
+.sec-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+h2.h { font-size: clamp(32px,4vw,52px); font-weight: 800; line-height: 1.05; letter-spacing: -.5px; margin-bottom: 14px; }
+p.sub { font-size: 17px; color: var(--sub); line-height: 1.65; max-width: 540px; }
+
+/* ── HERO ────────────────────────────────────────── */
+#hero { background: var(--dark); padding-top: 110px; padding-bottom: 0; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1fr 420px; gap: 64px; align-items: flex-end; }
+.hero-text { padding-bottom: 80px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,90,44,.12); border: 1px solid rgba(255,90,44,.25);
+  border-radius: var(--r-pill); padding: 5px 13px;
+  font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+h1.hero-h { font-size: clamp(48px,6vw,84px); font-weight: 900; line-height: .98; letter-spacing: -3px; color: #fff; margin-bottom: 22px; }
+h1.hero-h em { font-style: normal; color: var(--accent); }
+p.hero-sub { font-size: 17px; color: rgba(255,255,255,.48); line-height: 1.65; margin-bottom: 36px; max-width: 420px; }
+.hero-actions { display: flex; align-items: center; gap: 16px; }
+.btn-store {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #fff; color: var(--ink); font-family: var(--font); font-size: 14.5px; font-weight: 700;
+  padding: 13px 22px; border-radius: 13px; text-decoration: none; transition: opacity .18s;
+}
+.btn-store:hover { opacity: .9; }
+.hero-note { font-size: 12.5px; color: rgba(255,255,255,.28); font-weight: 500; }
+
+/* Phone frame */
+.hero-phone { display: flex; justify-content: center; align-items: flex-end; }
+.pframe {
+  width: 258px;
+  background: #0C0B09;
+  border-radius: 50px;
+  border: 2.5px solid rgba(255,255,255,.15);
+  overflow: hidden;
+  position: relative;
+  padding: 5px;
+  box-shadow:
+    0 48px 88px rgba(0,0,0,.65),
+    0 0 0 1px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+.pframe img {
+  width: 100%;
+  display: block;
+  border-radius: 44px;
+}
+.pnotch {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 88px; height: 26px; background: #0E0C0A; border-radius: 18px; z-index: 10;
+}
+.pscreen { background: #FAF7F2; padding: 50px 0 0; min-height: 540px; }
+/* in-phone UI */
+.ph-head { padding: 4px 18px 10px; }
+.ph-date { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A847B; margin-bottom: 1px; }
+.ph-greet { font-size: 23px; font-weight: 800; color: #181512; letter-spacing: -.5px; text-transform: uppercase; line-height: 1; }
+.ph-card { margin: 0 10px 10px; background: #181512; border-radius: 14px; padding: 13px 14px; }
+.ph-card-label { font-size: 8.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+.ph-shoe-row { display: flex; align-items: center; gap: 11px; }
+.ph-ring { position: relative; width: 46px; height: 46px; flex-shrink: 0; }
+.ph-ring svg { width: 46px; height: 46px; }
+.ph-ring-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0; }
+.ph-ring-pct { font-size: 10px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+.ph-shoe-info { flex: 1; min-width: 0; }
+.ph-shoe-name { font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-shoe-why { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 1px; }
+.ph-see { font-size: 10.5px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.ph-sec { padding: 8px 18px 5px; font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #8A847B; }
+.ph-row { margin: 0 10px 5px; background: #fff; border: 1px solid #ECE7DF; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 9px; }
+.ph-bar { width: 3px; height: 32px; border-radius: 2px; flex-shrink: 0; }
+.ph-meta { flex: 1; }
+.ph-dist { font-size: 14px; font-weight: 800; color: #181512; letter-spacing: -.3px; }
+.ph-info { font-size: 10px; color: #8A847B; margin-top: 1px; }
+.ph-chip { padding: 2px 7px; border-radius: var(--r-pill); font-size: 9.5px; font-weight: 700; }
+
+/* ── FEATURES ────────────────────────────────────── */
+#features { border-top: 1px solid var(--line); }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+.feat-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; }
+.feat-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; color: var(--accent); }
+.feat-card h3 { font-size: 16px; font-weight: 700; letter-spacing: -.1px; margin-bottom: 7px; }
+.feat-card p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+/* ── WEAR SYSTEM ─────────────────────────────────── */
+#wear { background: var(--dark); }
+#wear .sec-label { color: rgba(255,90,44,.75); }
+#wear h2.h { color: #fff; }
+#wear p.sub { color: rgba(255,255,255,.4); }
+.wear-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 52px; }
+.wear-card { background: var(--dark-card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--r); padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 13px; }
+.wring { position: relative; width: 78px; height: 78px; }
+.wring svg { width: 78px; height: 78px; }
+.wring-lbl { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+.wring-pct { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -.4px; }
+.wring-txt { font-size: 8.5px; font-weight: 700; color: rgba(255,255,255,.35); letter-spacing: .1em; text-transform: uppercase; }
+.wear-chip { border-radius: var(--r-pill); padding: 4px 11px; font-size: 11px; font-weight: 700; }
+.wear-name { font-size: 13px; font-weight: 700; color: #fff; }
+.wear-desc { font-size: 11.5px; color: rgba(255,255,255,.38); text-align: center; line-height: 1.5; }
+
+/* ── SCREENSHOTS ────────────────────────────────── */
+.sc-strip {
+  display: flex; gap: 28px; justify-content: center;
+  padding: 52px 48px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sc-strip::-webkit-scrollbar { display: none; }
+.sc-item { display: flex; flex-direction: column; align-items: center; gap: 16px; flex-shrink: 0; }
+.sc-frame {
+  width: 200px;
+  background: #0C0B09;
+  border-radius: 44px;
+  border: 2.5px solid rgba(255,255,255,.15);
+  overflow: hidden;
+  padding: 5px;
+  position: relative;
+  box-shadow:
+    0 36px 72px rgba(0,0,0,.6),
+    0 0 0 1px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+.sc-frame img {
+  width: 100%;
+  display: block;
+  border-radius: 38px;
+}
+/* Dynamic Island */
+.pframe::before, .sc-frame::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0C0B09;
+  border-radius: 20px;
+  z-index: 10;
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,.07);
+}
+.pframe::before {
+  width: 82px;
+  height: 26px;
+  top: 15px;
+}
+.sc-frame::before {
+  width: 64px;
+  height: 21px;
+  top: 13px;
+}
+/* Home indicator */
+.pframe::after, .sc-frame::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.55);
+  border-radius: 3px;
+  z-index: 10;
+}
+.pframe::after {
+  width: 100px;
+  height: 4px;
+  bottom: 12px;
+}
+.sc-frame::after {
+  width: 76px;
+  height: 3.5px;
+  bottom: 10px;
+}
+.sc-label { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+.sc-desc { font-size: 12px; color: rgba(255,255,255,.38); text-align: center; max-width: 160px; line-height: 1.4; padding-bottom: 52px; }
+
+/* ── TIPOS ───────────────────────────────────────── */
+#tipos { background: var(--bg-warm); border-top: 1px solid var(--line); }
+.tipos-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-top: 52px; }
+.tipo-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 16px; display: flex; flex-direction: column; gap: 10px; }
+.tipo-dot { width: 10px; height: 10px; border-radius: 50%; }
+.tipo-name { font-size: 14px; font-weight: 700; }
+.tipo-use { font-size: 12px; color: var(--sub); line-height: 1.5; }
+.tipo-chip { display: inline-flex; padding: 3px 9px; border-radius: 6px; font-size: 10.5px; font-weight: 700; align-self: flex-start; }
+
+/* ── PRICING ─────────────────────────────────────── */
+#pricing { border-top: 1px solid var(--line); }
+.pricing-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px; max-width: 740px; }
+.p-card { border-radius: var(--r); padding: 32px; border: 1px solid var(--line); background: var(--card); }
+.p-card.pro { background: var(--dark); border-color: rgba(255,90,44,.2); }
+.p-tier { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.p-card:not(.pro) .p-tier { color: var(--sub); }
+.p-card.pro .p-tier { color: var(--accent); }
+.p-price { font-size: 42px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 24px; }
+.p-card.pro .p-price { color: #fff; }
+.p-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.p-list li { font-size: 13.5px; font-weight: 500; display: flex; align-items: center; gap: 9px; }
+.p-card.pro .p-list li { color: rgba(255,255,255,.8); }
+.p-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.p-card.pro .p-dot { background: var(--accent); }
+.p-card:not(.pro) .p-dot { background: var(--line); }
+
+/* ── NOVEDADES ───────────────────────────────────── */
+#novedades { border-top: 1px solid var(--line); }
+.timeline { margin-top: 52px; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 88px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.t-item { display: grid; grid-template-columns: 88px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--line); position: relative; }
+.t-item:last-child { border-bottom: none; }
+.t-ver { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--sub); text-align: right; padding-right: 24px; padding-top: 3px; line-height: 1.5; }
+.t-dot { position: absolute; left: 82px; top: 31px; width: 13px; height: 13px; border-radius: 50%; background: var(--line); border: 2.5px solid var(--bg); }
+.t-item.now .t-dot { background: var(--accent); border-color: var(--bg); }
+.t-title { font-size: 16px; font-weight: 700; letter-spacing: -.2px; margin-bottom: 6px; }
+.t-desc { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 11px; }
+.t-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.t-tag { background: var(--bg-warm); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 600; color: var(--sub); }
+.t-tag.ok { background: rgba(31,168,106,.1); border-color: rgba(31,168,106,.2); color: var(--fresh); }
+.t-tag.now { background: var(--accent-soft); border-color: rgba(255,90,44,.2); color: var(--accent); }
+
+/* ── ROADMAP ─────────────────────────────────────── */
+#roadmap { background: var(--bg-warm); border-top: 1px solid var(--line); }
+.rm-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 52px; }
+.rm-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; }
+.rm-card.hot { background: var(--accent-soft); border-color: rgba(255,90,44,.25); }
+.rm-status { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+.rm-sdot { width: 6px; height: 6px; border-radius: 50%; }
+.rm-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 7px; letter-spacing: -.1px; }
+.rm-card p { font-size: 13px; color: var(--sub); line-height: 1.55; }
+
+/* ── PRIVACY STRIP ───────────────────────────────── */
+.priv-strip { background: var(--dark); padding: 72px 0; border-top: 1px solid rgba(255,255,255,.04); }
+.priv-table-wrap { overflow-x: auto; margin-bottom: 36px; }
+.priv-table { width: 100%; border-collapse: collapse; }
+.priv-table th { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); text-align: left; padding: 0 16px 12px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+.priv-table td { font-size: 13.5px; color: rgba(255,255,255,.65); padding: 14px 16px 14px 0; border-bottom: 1px solid rgba(255,255,255,.05); vertical-align: top; line-height: 1.45; }
+.priv-table tr:last-child td { border-bottom: none; }
+.priv-badge { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 5px; background: rgba(31,168,106,.18); color: #1FA86A; font-size: 10px; font-weight: 700; letter-spacing: .06em; }
+.priv-pills { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-top: 8px; }
+.priv-pill { display: flex; gap: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: var(--r); padding: 20px; }
+.priv-pill-icon { font-size: 18px; color: var(--accent); flex-shrink: 0; width: 24px; text-align: center; margin-top: 1px; }
+.priv-pill strong { font-size: 13.5px; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; }
+.priv-pill p { font-size: 12.5px; color: rgba(255,255,255,.38); line-height: 1.55; margin: 0; }
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(255,255,255,.06); }
+.footer-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-weight: 900; font-size: 18px; color: #fff; letter-spacing: -.5px; }
+.footer-logo em { font-style: normal; color: var(--accent); }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s; }
+.footer-links a:hover { color: rgba(255,255,255,.65); }
+.footer-copy { font-size: 11.5px; color: rgba(255,255,255,.2); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Runn<em>io</em></a>
+  <ul class="nav-links">
+    <li><a href="#features">La app</a></li>
+    <li><a href="#screenshots">Pantallas</a></li>
+    <li><a href="#novedades">Novedades</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Descargar gratis</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="sec" style="padding-top:110px;padding-bottom:0;background:var(--dark);overflow:hidden;">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge"><div class="hero-badge-dot"></div>Ya disponible en iOS</div>
+        <h1 class="hero-h">Cada km.<br>Cada<br><em>zapatilla.</em></h1>
+        <p class="hero-sub">Registra tus entrenamientos, controla el desgaste de cada par de zapatillas y descubre cuándo rotarlas antes de que tus rodillas lo noten. Correr con zapatillas agotadas es la causa número uno de lesiones evitables.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn-store">
+            <svg width="18" height="22" viewBox="0 0 20 24" fill="currentColor"><path d="M16.3 12.7c0-3.2 2.6-4.7 2.7-4.8-1.5-2.1-3.7-2.4-4.5-2.4-1.9-.2-3.7 1.1-4.7 1.1-1 0-2.5-1.1-4.1-1-2.1 0-4 1.2-5.1 3.1-2.2 3.8-.6 9.4 1.5 12.5 1 1.5 2.3 3.1 3.9 3.1 1.6-.1 2.2-1 4.1-1 1.9 0 2.4 1 4.1 1 1.7 0 2.8-1.5 3.8-3 1.2-1.7 1.7-3.4 1.7-3.5-.1 0-3.4-1.3-3.4-5.1zM13.3 3.6c.8-1 1.4-2.4 1.2-3.6-1.2 0-2.6.8-3.5 1.8-.8.9-1.5 2.3-1.2 3.6 1.3 0 2.6-.8 3.5-1.8z"/></svg>
+            Descargar en App Store
+          </a>
+          <span class="hero-note">iOS · Gratis</span>
+        </div>
+      </div>
+      <div class="hero-phone">
+        <div class="pframe">
+          <img src="uploads/pasted-1782054899396-0.png" alt="Runnio – pantalla de inicio" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots" class="sec" style="background:var(--dark);overflow:hidden;">
+  <div class="wrap">
+    <div class="sec-label" style="color:rgba(255,90,44,.75);">La app por dentro</div>
+    <h2 class="h" style="color:#fff;">Cada pantalla,<br>diseñada para corredores.</h2>
+  </div>
+  <div class="sc-strip">
+    <div class="sc-item">
+      <div class="sc-frame"><img src="uploads/pasted-1782054899396-0.png" alt="Inicio" /></div>
+      <div class="sc-label">Inicio</div>
+      <div class="sc-desc">Rotación sugerida del día y últimos entrenos</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-frame"><img src="uploads/pasted-1782054914581-0.png" alt="Zapatillas" /></div>
+      <div class="sc-label">Zapatillas</div>
+      <div class="sc-desc">Lista con desgaste en tiempo real</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-frame"><img src="uploads/pasted-1782054929104-0.png" alt="Ficha de zapatilla" /></div>
+      <div class="sc-label">Ficha</div>
+      <div class="sc-desc">Pronóstico de vida útil e historial</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-frame"><img src="uploads/pasted-1782054939907-0.png" alt="Calendario" /></div>
+      <div class="sc-label">Calendario</div>
+      <div class="sc-desc">Tu mes de un vistazo con filtros</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-frame"><img src="uploads/pasted-1782054962111-0.png" alt="Ajustes" /></div>
+      <div class="sc-label">Ajustes</div>
+      <div class="sc-desc">Notificaciones y rotación inteligente</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="sec">
+  <div class="wrap">
+    <div class="sec-label">Por qué Runnio</div>
+    <h2 class="h">Diseñado para<br>corredores serios.</h2>
+    <p class="sub">No solo registra. Entiende cómo corres y protege tu inversión en zapatillas.</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3.5 2"/></svg>
+        </div>
+        <h3>Desgaste en tiempo real</h3>
+        <p>Anillo visual por zapatilla. Sabe exactamente cuántos km le quedan antes de que tus rodillas lo noten.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Auto-clasificación</h3>
+        <p>Al importar desde Apple Health detecta trail, carrera, largo o tempo automáticamente. Sin tocar nada.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Rotación inteligente</h3>
+        <p>Cada día sugiere qué zapatilla usar según su desgaste y tu patrón semanal de entrenos.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </div>
+        <h3>Estadísticas comparativas</h3>
+        <p>Semana, mes, trimestre: compara cada período con el anterior y ve si estás progresando.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Sin cuenta ni servidor</h3>
+        <p>Todo en tu iPhone, sincronizado por iCloud privado. Sin registro, sin suscripción obligatoria.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 20c-2.8 0-5-2-5-5s2.2-5 5-5 5 2 5 5-2.2 5-5 5z"/></svg>
+        </div>
+        <h3>Personalización completa</h3>
+        <p>5 colores de acento, umbrales de auto-clasificación ajustables, vida útil por zapatilla configurable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEAR SYSTEM -->
+<section id="wear" class="sec">
+  <div class="wrap">
+    <div class="sec-label">Sistema de desgaste</div>
+    <h2 class="h" style="color:#fff;">Nunca más corras<br>con zapatillas agotadas.</h2>
+    <p class="sub">Runnio calcula el desgaste en tiempo real y escala del verde al rojo antes de que llegues al límite.</p>
+    <div class="wear-grid">
+      <div class="wear-card">
+        <div class="wring">
+          <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="30" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="6"/><circle cx="39" cy="39" r="30" fill="none" stroke="#1FA86A" stroke-width="6" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="160.2" transform="rotate(-90 39 39)"/></svg>
+          <div class="wring-lbl"><span class="wring-pct">15%</span><span class="wring-txt">usada</span></div>
+        </div>
+        <span class="wear-chip" style="background:rgba(31,168,106,.15);color:#1FA86A;">Como nueva</span>
+        <div class="wear-name">Fresh · 0–49%</div>
+        <div class="wear-desc">Rendimiento óptimo. Amortiguación completa.</div>
+      </div>
+      <div class="wear-card">
+        <div class="wring">
+          <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="30" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="6"/><circle cx="39" cy="39" r="30" fill="none" stroke="#E9A100" stroke-width="6" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="75.4" transform="rotate(-90 39 39)"/></svg>
+          <div class="wring-lbl"><span class="wring-pct">60%</span><span class="wring-txt">usada</span></div>
+        </div>
+        <span class="wear-chip" style="background:rgba(233,161,0,.15);color:#E9A100;">En forma</span>
+        <div class="wear-name">Mid · 50–79%</div>
+        <div class="wear-desc">Todavía válida. Empieza a planificar el relevo.</div>
+      </div>
+      <div class="wear-card">
+        <div class="wring">
+          <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="30" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="6"/><circle cx="39" cy="39" r="30" fill="none" stroke="#FF7A3C" stroke-width="6" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="32.0" transform="rotate(-90 39 39)"/></svg>
+          <div class="wring-lbl"><span class="wring-pct">83%</span><span class="wring-txt">usada</span></div>
+        </div>
+        <span class="wear-chip" style="background:rgba(255,122,60,.15);color:#FF7A3C;">Desgaste alto</span>
+        <div class="wear-name">High · 80–99%</div>
+        <div class="wear-desc">Precaución. Riesgo de lesión en distancias largas.</div>
+      </div>
+      <div class="wear-card">
+        <div class="wring">
+          <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="30" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="6"/><circle cx="39" cy="39" r="30" fill="none" stroke="#FF4D67" stroke-width="6" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="0" transform="rotate(-90 39 39)"/></svg>
+          <div class="wring-lbl"><span class="wring-pct">100%</span><span class="wring-txt">usada</span></div>
+        </div>
+        <span class="wear-chip" style="background:rgba(255,77,103,.15);color:#FF4D67;">Reemplazar ya</span>
+        <div class="wear-name">Retire · ≥100%</div>
+        <div class="wear-desc">Vida útil agotada. Es hora de renovar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOS DE ENTRENAMIENTO -->
+<section id="tipos" class="sec">
+  <div class="wrap">
+    <div class="sec-label">Tipos de entrenamiento</div>
+    <h2 class="h">Cada entreno<br>tiene su nombre.</h2>
+    <p class="sub">Runnio clasifica automáticamente cada workout importado de Apple Health. Tú confirmas o ajustas.</p>
+    <div class="tipos-grid">
+      <div class="tipo-card">
+        <div class="tipo-dot" style="background:#F4783A;"></div>
+        <div class="tipo-name">Diario</div>
+        <div class="tipo-use">Rodaje estándar. El default cuando no aplica otra clasificación.</div>
+        <span class="tipo-chip" style="background:rgba(244,120,58,.12);color:#F4783A;">figure.run</span>
+      </div>
+      <div class="tipo-card">
+        <div class="tipo-dot" style="background:#4A90D9;"></div>
+        <div class="tipo-name">Largo</div>
+        <div class="tipo-use">Distancias ≥ 18 km. Detectado automáticamente al importar.</div>
+        <span class="tipo-chip" style="background:rgba(74,144,217,.12);color:#4A90D9;">≥ 18 km</span>
+      </div>
+      <div class="tipo-card">
+        <div class="tipo-dot" style="background:#2DB87A;"></div>
+        <div class="tipo-name">Tempo</div>
+        <div class="tipo-use">Ritmo ≤ 5:00 min/km. Umbral configurable en ajustes.</div>
+        <span class="tipo-chip" style="background:rgba(45,184,122,.12);color:#2DB87A;">≤ 5:00 /km</span>
+      </div>
+      <div class="tipo-card">
+        <div class="tipo-dot" style="background:#9B59B6;"></div>
+        <div class="tipo-name">Carrera</div>
+        <div class="tipo-use">Distancias oficiales: 5K, 10K, media maratón, maratón (±3%).</div>
+        <span class="tipo-chip" style="background:rgba(155,89,182,.12);color:#9B59B6;">trophy</span>
+      </div>
+      <div class="tipo-card">
+        <div class="tipo-dot" style="background:#D4A020;"></div>
+        <div class="tipo-name">Trail</div>
+        <div class="tipo-use">Desnivel ≥ 100 m. Requiere datos de Apple Watch.</div>
+        <span class="tipo-chip" style="background:rgba(212,160,32,.12);color:#D4A020;">≥ 100 m D+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec" style="background:var(--bg-warm);">
+  <div class="wrap">
+    <div class="sec-label">Modelo freemium</div>
+    <h2 class="h">Empieza gratis.<br>Desbloquea cuando quieras.</h2>
+    <p class="sub">La funcionalidad esencial es gratis para siempre. El plan Pro desbloquea todo lo demás.</p>
+    <div class="pricing-row">
+      <div class="p-card">
+        <div class="p-tier">Gratis</div>
+        <div class="p-price">€0</div>
+        <ul class="p-list">
+          <li><div class="p-dot"></div>Hasta 3 zapatillas</li>
+          <li><div class="p-dot"></div>Solo tipo Diario</li>
+          <li><div class="p-dot"></div>Anillo de desgaste</li>
+          <li><div class="p-dot"></div>Entrenos manuales</li>
+          <li><div class="p-dot"></div>Modos claro y oscuro</li>
+          <li><div class="p-dot"></div>Rotación básica</li>
+        </ul>
+      </div>
+      <div class="p-card pro">
+        <div class="p-tier">Pro</div>
+        <div class="p-price" style="font-size:32px;margin-bottom:4px;">2,99 €<span style="font-size:15px;font-weight:500;opacity:.5;">/mes</span></div>
+        <div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:22px;">o 17,99 € al año · ahorra 4 meses</div>
+        <ul class="p-list">
+          <li><div class="p-dot"></div>Zapatillas ilimitadas</li>
+          <li><div class="p-dot"></div>Todos los tipos de entrenamiento</li>
+          <li><div class="p-dot"></div>Apple Health · auto-sync</li>
+          <li><div class="p-dot"></div>Auto-clasificación</li>
+          <li><div class="p-dot"></div>Stats comparativas</li>
+          <li><div class="p-dot"></div>Rotación inteligente</li>
+          <li><div class="p-dot"></div>Notificaciones de desgaste</li>
+          <li><div class="p-dot"></div>Backup · iCloud sync</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVEDADES -->
+<section id="novedades" class="sec">
+  <div class="wrap">
+    <div class="sec-label">Novedades</div>
+    <h2 class="h">Historial de versiones.</h2>
+    <p class="sub">Lo que hemos construido hasta aquí, versión a versión.</p>
+    <div class="timeline">
+      <div class="t-item now">
+        <div class="t-ver">Build 8<br>Jun 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Rotación inteligente + Notificaciones</div>
+          <div class="t-desc">El modo inteligente analiza tu patrón semanal y sugiere la zapatilla más adecuada para el día. Nuevas notificaciones post-entrenamiento, alertas de sobreuso y aviso cuando una zapatilla ha descansado lo suficiente.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Rotación inteligente</span>
+            <span class="t-tag ok">Alertas de descanso</span>
+            <span class="t-tag ok">Push notifications</span>
+            <span class="t-tag now">Versión actual</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-ver">Build 6<br>May 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Estadísticas comparativas</div>
+          <div class="t-desc">Pantalla de Stats rediseñada con comparativa período a período, gráfico semanal de km/entrenos y gráfico de distribución por tipo. Período personalizado disponible.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Stats comparativas</span>
+            <span class="t-tag ok">Gráfico semanal</span>
+            <span class="t-tag ok">Distribución por tipo</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-ver">Build 4<br>Abr 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Auto-clasificación de entrenamientos</div>
+          <div class="t-desc">Al importar desde Apple Health, Runnio detecta trail (desnivel), carrera (distancia exacta), largo, tempo o diario. Badge naranja "Auto" en los pendientes de confirmar. Umbrales configurables en Ajustes.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Auto-clasificación</span>
+            <span class="t-tag ok">Badge "Auto"</span>
+            <span class="t-tag ok">Umbrales configurables</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-ver">Build 2<br>Mar 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Apple Health + Personalización</div>
+          <div class="t-desc">Importación de workouts desde Apple Health, color de acento personalizable (5 opciones), nombre de usuario y modos claro / oscuro / automático.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Apple Health</span>
+            <span class="t-tag ok">5 acentos</span>
+            <span class="t-tag ok">Dark mode</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-ver">Build 1<br>Feb 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Lanzamiento</div>
+          <div class="t-desc">Primera versión pública: registro de zapatillas con anillo de desgaste, entrenamientos manuales y sugerencia básica de rotación.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Zapatillas + desgaste</span>
+            <span class="t-tag ok">Entrenos manuales</span>
+            <span class="t-tag ok">Rotación básica</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="sec">
+  <div class="wrap">
+    <div class="sec-label">Roadmap</div>
+    <h2 class="h">Lo que viene.</h2>
+    <p class="sub">Funcionalidades en desarrollo y en la lista. El orden puede cambiar según feedback.</p>
+    <div class="rm-grid">
+      <div class="rm-card hot">
+        <div class="rm-status" style="color:var(--accent);"><div class="rm-sdot" style="background:var(--accent);"></div>En desarrollo</div>
+        <h4>Widget de inicio</h4>
+        <p>Zapatilla sugerida del día, anillo de desgaste y km de la semana en la pantalla de inicio de iOS.</p>
+      </div>
+      <div class="rm-card hot">
+        <div class="rm-status" style="color:var(--accent);"><div class="rm-sdot" style="background:var(--accent);"></div>En desarrollo</div>
+        <h4>Plan Pro</h4>
+        <p>Desbloqueo completo vía RevenueCat. Precios pendientes de definir. Acceso anticipado disponible al lanzar.</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
+        <h4>Vista de Calendario</h4>
+        <p>Heatmap mensual de actividad. Visualiza rachas, semanas de descarga y períodos de lesión de un vistazo.</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
+        <h4>Apple Watch companion</h4>
+        <p>Complicación con el desgaste de la zapatilla activa y acceso rápido al registro desde la muñeca.</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Estudiando</div>
+        <h4>iPad nativo</h4>
+        <p>Vista dividida con tabla de zapatillas y gráficos expandidos para análisis más cómodo en pantalla grande.</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Estudiando</div>
+        <h4>Múltiples perfiles</h4>
+        <p>Soporte para corredores que comparten dispositivo o quieren gestionar el equipamiento de toda la familia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY STRIP -->
+<div class="priv-strip">
+  <div class="wrap">
+    <div class="sec-label" style="color:rgba(255,90,44,.7);margin-bottom:10px;">Privacidad</div>
+    <h2 class="h" style="color:#fff;margin-bottom:6px;">Todo en tu dispositivo<br>y tu iCloud.</h2>
+    <p style="font-size:16px;color:rgba(255,255,255,.38);margin-bottom:40px;max-width:480px;line-height:1.6;">Runnio no tiene servidores propios. Tus datos no nos pasan por las manos.</p>
+
+    <div class="priv-table-wrap">
+      <table class="priv-table">
+        <thead>
+          <tr>
+            <th>Qué</th>
+            <th>Dónde</th>
+            <th>Quién tiene acceso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Zapatillas y entrenamientos</td>
+            <td>Tu iPhone <span class="priv-badge">local</span></td>
+            <td>Solo tú</td>
+          </tr>
+          <tr>
+            <td>Preferencias y ajustes</td>
+            <td>iCloud Key-Value Store</td>
+            <td>Solo tú, sincronizado entre dispositivos</td>
+          </tr>
+          <tr>
+            <td>Fotos de zapatillas</td>
+            <td>iCloud Private Database (CloudKit)</td>
+            <td>Solo tú</td>
+          </tr>
+          <tr>
+            <td>Datos de Apple Salud</td>
+            <td>Solo se leen, nunca se guardan fuera de Salud</td>
+            <td>Solo tú</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="priv-pills">
+      <div class="priv-pill">
+        <div class="priv-pill-icon">⟿</div>
+        <div>
+          <strong>Sin cuenta de usuario</strong>
+          <p>No necesitas registrarte ni dar tu email. La app funciona desde el primer segundo.</p>
+        </div>
+      </div>
+      <div class="priv-pill">
+        <div class="priv-pill-icon">⊘</div>
+        <div>
+          <strong>Sin servidor propio</strong>
+          <p>Runnio no tiene backend. Tus datos no pasan por ningún servidor nuestro.</p>
+        </div>
+      </div>
+      <div class="priv-pill">
+        <div class="priv-pill-icon">⌁</div>
+        <div>
+          <strong>Privacidad real</strong>
+          <p>Ni Apple ni Runnio pueden leer tus datos de entrenamiento — están en tu iCloud privado.</p>
+        </div>
+      </div>
+      <div class="priv-pill">
+        <div class="priv-pill-icon">✕</div>
+        <div>
+          <strong>Eliminar todo</strong>
+          <p>Borra la app y tus datos locales desaparecen. Para iCloud: Ajustes → tu nombre → iCloud → Gestionar almacenamiento → Runnio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="footer-logo">Runn<em>io</em></div>
+      <ul class="footer-links">
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">getrunnio.app</a></li>
+        <li><a href="#">App Store</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Runnio · iOS</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Active nav on scroll
+const secs = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('.nav-links a');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(a => a.classList.toggle('act', a.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+secs.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
