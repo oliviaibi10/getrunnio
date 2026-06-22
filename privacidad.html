@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Política de Privacidad — Runnio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #FAFAFA;
+  --dark: #181512;
+  --dark-card: #1D1B18;
+  --ink: #181512;
+  --sub: #8A847B;
+  --line: #ECE7DF;
+  --accent: #FF5A2C;
+  --r: 18px;
+  --font: 'Hanken Grotesk', system-ui, sans-serif;
+  --mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 60px;
+  background: rgba(24,21,18,0.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-logo { font-weight: 900; font-size: 18px; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+.nav-logo em { font-style: normal; color: var(--accent); }
+
+.wrap { max-width: 740px; margin: 0 auto; padding: 0 48px; }
+
+.content { padding: 100px 0 80px; }
+
+h1 { font-size: 42px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 8px; }
+.updated { font-size: 13px; color: var(--sub); margin-bottom: 56px; }
+
+h2 { font-size: 20px; font-weight: 800; letter-spacing: -.3px; margin: 44px 0 14px; }
+h3 { font-size: 15px; font-weight: 700; margin: 20px 0 8px; }
+p { font-size: 15px; color: #3D3A37; line-height: 1.75; margin-bottom: 14px; }
+ul { padding-left: 20px; margin-bottom: 14px; }
+ul li { font-size: 15px; color: #3D3A37; line-height: 1.75; margin-bottom: 4px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid var(--line); margin: 40px 0; }
+strong { color: var(--ink); font-weight: 700; }
+
+.notice {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r);
+  padding: 20px 24px; margin: 20px 0;
+  font-size: 14px; color: #3D3A37; line-height: 1.7;
+}
+
+footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(255,255,255,.06); }
+.footer-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-weight: 900; font-size: 18px; color: #fff; letter-spacing: -.5px; }
+.footer-logo em { font-style: normal; color: var(--accent); }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links a { font-size: 12.5px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s; }
+.footer-links a:hover { color: rgba(255,255,255,.65); }
+.footer-copy { font-size: 11.5px; color: rgba(255,255,255,.2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Runn<em>io</em></a>
+</nav>
+
+<div class="content">
+  <div class="wrap">
+    <h1>Política de Privacidad</h1>
+    <div class="updated">Última actualización: junio de 2026</div>
+
+    <h2>Tu privacidad importa</h2>
+    <p>Runnio almacena tus datos en tu dispositivo y los sincroniza entre tus propios dispositivos Apple mediante iCloud. Nunca se envía información a servidores de Runnio ni a terceros, salvo lo indicado en la sección de compras.</p>
+
+    <hr />
+
+    <h2>Datos que almacena la app</h2>
+    <p>Runnio guarda tus datos en dos lugares, ambos bajo tu control:</p>
+    <h3>Solo en tu dispositivo:</h3>
+    <ul>
+      <li>Permisos de notificaciones y conexión con Apple Salud</li>
+    </ul>
+    <h3>En tu iCloud (sincronizado entre tus dispositivos Apple):</h3>
+    <ul>
+      <li>Entrenos: fecha, distancia, ritmo, tipo y zapatilla asignada</li>
+      <li>Zapatillas: marca, modelo, alias, fotos y kilómetros acumulados</li>
+      <li>Preferencias: tema, colores, unidades y nombre de usuario</li>
+    </ul>
+    <div class="notice">iCloud es tu propio espacio privado de Apple. Runnio no tiene acceso a él; Apple solo lo usa para sincronizar entre tus dispositivos.</div>
+
+    <hr />
+
+    <h2>Acceso a Apple Salud (HealthKit)</h2>
+    <p>Si concedes permiso, la app lee desde Apple Salud:</p>
+    <ul>
+      <li>Entrenamientos de carrera (tipo, fecha, distancia, duración)</li>
+      <li>Frecuencia cardíaca media del entrenamiento</li>
+      <li>Distancia andando/corriendo</li>
+      <li>Velocidad de carrera (para calcular el ritmo)</li>
+    </ul>
+    <p>La app <strong>nunca escribe datos en Apple Salud</strong>. Los datos de salud se usan exclusivamente para mostrarte tus estadísticas dentro de la app y nunca se envían fuera del dispositivo.</p>
+    <p>Puedes revocar este permiso en: <em>Ajustes → Salud → Acceso a datos y dispositivos → Runnio.</em></p>
+
+    <hr />
+
+    <h2>Sincronización con iCloud</h2>
+    <p>Runnio usa iCloud Key-Value Store y CloudKit Private Database para sincronizar tus entrenos, zapatillas, fotos y preferencias entre todos tus dispositivos con la misma cuenta de Apple ID.</p>
+    <ul>
+      <li>La sincronización es automática cuando tienes iCloud activado.</li>
+      <li>Si desactivas iCloud, tus datos siguen disponibles localmente en el dispositivo.</li>
+      <li>Para eliminar datos de iCloud: <em>Ajustes → [tu nombre] → iCloud → Gestionar almacenamiento → Runnio.</em></li>
+    </ul>
+    <p>Runnio no tiene acceso a tu cuenta de iCloud; solo Apple gestiona la transferencia entre dispositivos.</p>
+
+    <hr />
+
+    <h2>Fotos de zapatillas</h2>
+    <p>Al añadir una foto, la app accede a tu biblioteca únicamente para que elijas la imagen. La foto se guarda:</p>
+    <ul>
+      <li><strong>Localmente</strong> en tu dispositivo, para acceso rápido sin conexión.</li>
+      <li><strong>En tu iCloud Private Database (CloudKit)</strong>, para que esté disponible si cambias de iPhone o reinstales la app.</li>
+    </ul>
+    <p>Las fotos están en tu iCloud privado. Runnio no tiene acceso a ellas; solo tú puedes verlas a través de tu cuenta de Apple.</p>
+
+    <hr />
+
+    <h2>Sin analíticas ni rastreo</h2>
+    <p>Runnio no contiene:</p>
+    <ul>
+      <li>SDKs de analíticas (Firebase, Amplitude, Mixpanel, etc.)</li>
+      <li>Redes publicitarias</li>
+      <li>Rastreadores de comportamiento</li>
+      <li>Identificadores publicitarios (IDFA)</li>
+    </ul>
+    <p>No recopilamos ningún dato de uso, ni siquiera de forma anónima.</p>
+
+    <hr />
+
+    <h2>Compras y suscripciones (RevenueCat)</h2>
+    <p>La gestión de compras se realiza a través de <strong>RevenueCat</strong>, un servicio especializado en pagos para apps.</p>
+    <p>RevenueCat recibe únicamente:</p>
+    <ul>
+      <li>Un identificador anónimo de instalación (sin nombre ni email)</li>
+      <li>El estado de tu suscripción (activa, caducada, etc.)</li>
+      <li>El país de la tienda de tu Apple ID</li>
+    </ul>
+    <p>RevenueCat no tiene acceso a tus datos de entrenamiento, zapatillas ni datos de salud. Toda la información de pago la gestiona Apple directamente a través de la App Store.</p>
+    <p>Política de privacidad de RevenueCat: <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a></p>
+
+    <hr />
+
+    <h2>Sin cuenta de usuario</h2>
+    <p>Runnio no requiere registro ni inicio de sesión. No existe ninguna cuenta asociada a tu identidad. Todos tus datos están vinculados exclusivamente a la instalación de la app en tu dispositivo.</p>
+
+    <hr />
+
+    <h2>Cómo eliminar tus datos</h2>
+    <ul>
+      <li><strong>Desinstala la app:</strong> borra los datos locales (entrenos, zapatillas, fotos y preferencias).</li>
+      <li><strong>Para borrar también iCloud:</strong> <em>Ajustes → [tu nombre] → iCloud → Gestionar almacenamiento → Runnio → Eliminar datos.</em></li>
+    </ul>
+    <p>Los datos leídos de Apple Salud no son modificados ni eliminados por Runnio al desinstalar.</p>
+
+    <hr />
+
+    <h2>Aviso legal</h2>
+    <ul>
+      <li>Runnio es una aplicación independiente, no afiliada a Apple Inc.</li>
+      <li>Apple, iPhone, Apple Watch, Apple Health y iCloud son marcas registradas de Apple Inc.</li>
+      <li>Las compras se procesan a través de la App Store de Apple.</li>
+      <li>Runnio no recopila, almacena ni procesa datos personales en servidores propios.</li>
+      <li>Al usar la app aceptas la política de privacidad descrita anteriormente.</li>
+    </ul>
+
+    <hr />
+
+    <h2>Contacto</h2>
+    <p>Para cualquier consulta sobre privacidad: <a href="mailto:olivia.ibi10@gmail.com">olivia.ibi10@gmail.com</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="max-width:1160px;">
+    <div class="footer-row">
+      <div class="footer-logo">Runn<em>io</em></div>
+      <ul class="footer-links">
+        <li><a href="/privacidad">Política de privacidad</a></li>
+        <li><a href="/">getrunnio.app</a></li>
+        <li><a href="#">App Store</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Runnio · iOS</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
