@@ -83,7 +83,34 @@ p.hero-sub { font-size: 17px; color: rgba(255,255,255,.48); line-height: 1.65; m
 .hero-note { font-size: 12.5px; color: rgba(255,255,255,.28); font-weight: 500; }
 
 /* Phone frame */
-.hero-phone { display: flex; justify-content: center; align-items: flex-end; }
+.hero-phone {
+  display: flex; justify-content: center; align-items: flex-end;
+  position: relative; height: 580px;
+}
+.hero-phones-stack {
+  position: relative; width: 258px; height: 560px;
+}
+.hero-phones-stack .pframe {
+  position: absolute; bottom: 0;
+}
+.hero-phones-stack .pframe.back-left {
+  left: -68px; bottom: 20px;
+  transform: rotate(-8deg) scale(0.88);
+  transform-origin: bottom center;
+  opacity: 0.55;
+  z-index: 1;
+}
+.hero-phones-stack .pframe.back-right {
+  right: -68px; bottom: 20px;
+  transform: rotate(8deg) scale(0.88);
+  transform-origin: bottom center;
+  opacity: 0.55;
+  z-index: 1;
+}
+.hero-phones-stack .pframe.front {
+  left: 50%; transform: translateX(-50%);
+  z-index: 3;
+}
 .pframe {
   width: 258px;
   background: #0C0B09;
@@ -403,8 +430,16 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
         </div>
       </div>
       <div class="hero-phone">
-        <div class="pframe">
-          <img src="uploads/pasted-1782054899396-0.png" alt="Runnio – pantalla de inicio" />
+        <div class="hero-phones-stack">
+          <div class="pframe back-left">
+            <img src="uploads/pasted-1782054929104-0.png" alt="Runnio – zapatilla detalle" />
+          </div>
+          <div class="pframe back-right">
+            <img src="uploads/pasted-1782054914581-0.png" alt="Runnio – zapatillas" />
+          </div>
+          <div class="pframe front">
+            <img src="uploads/pasted-1782054899396-0.png" alt="Runnio – pantalla de inicio" />
+          </div>
         </div>
       </div>
     </div>
