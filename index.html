@@ -255,12 +255,16 @@ p.hero-sub { font-size: 17px; color: rgba(255,255,255,.48); line-height: 1.65; m
 
 /* ── TIPOS ───────────────────────────────────────── */
 #tipos { background: var(--bg-warm); border-top: 1px solid var(--line); }
-.tipos-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-top: 52px; }
-.tipo-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: row; align-items: center; gap: 12px; }
-.tipo-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.tipo-name { font-size: 13px; font-weight: 700; flex: 1; }
-.tipo-use { display: none; }
-.tipo-chip { display: inline-flex; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.tipos-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 16px; margin-top: 52px; }
+.tipo-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px 20px; display: flex; flex-direction: column; gap: 10px;
+}
+.tipo-card-top { display: flex; align-items: center; gap: 10px; }
+.tipo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.tipo-name { font-size: 15px; font-weight: 800; flex: 1; letter-spacing: -.2px; }
+.tipo-use { font-size: 13px; color: var(--sub); line-height: 1.55; }
+.tipo-chip { display: inline-flex; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; align-self: flex-start; margin-top: 2px; }
 
 /* ── PRICING ─────────────────────────────────────── */
 #pricing { border-top: 1px solid var(--line); }
@@ -589,32 +593,42 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
     <p class="sub">Runnio clasifica automáticamente cada workout importado de Apple Health. Tú confirmas o ajustas — y los umbrales son totalmente personalizables.</p>
     <div class="tipos-grid">
       <div class="tipo-card">
-        <div class="tipo-dot" style="background:#F4783A;"></div>
-        <div class="tipo-name">Diario</div>
+        <div class="tipo-card-top">
+          <div class="tipo-dot" style="background:#F4783A;"></div>
+          <div class="tipo-name">Diario</div>
+        </div>
         <div class="tipo-use">Rodaje estándar. El default cuando no aplica otra clasificación.</div>
         <span class="tipo-chip" style="background:rgba(244,120,58,.12);color:#F4783A;">figure.run</span>
       </div>
       <div class="tipo-card">
-        <div class="tipo-dot" style="background:#4A90D9;"></div>
-        <div class="tipo-name">Largo</div>
+        <div class="tipo-card-top">
+          <div class="tipo-dot" style="background:#4A90D9;"></div>
+          <div class="tipo-name">Largo</div>
+        </div>
         <div class="tipo-use">Distancias ≥ 18 km. Detectado automáticamente al importar.</div>
         <span class="tipo-chip" style="background:rgba(74,144,217,.12);color:#4A90D9;">≥ 18 km</span>
       </div>
       <div class="tipo-card">
-        <div class="tipo-dot" style="background:#2DB87A;"></div>
-        <div class="tipo-name">Tempo</div>
+        <div class="tipo-card-top">
+          <div class="tipo-dot" style="background:#2DB87A;"></div>
+          <div class="tipo-name">Tempo</div>
+        </div>
         <div class="tipo-use">Ritmo ≤ 5:00 min/km. Umbral configurable en ajustes.</div>
         <span class="tipo-chip" style="background:rgba(45,184,122,.12);color:#2DB87A;">≤ 5:00 /km</span>
       </div>
       <div class="tipo-card">
-        <div class="tipo-dot" style="background:#9B59B6;"></div>
-        <div class="tipo-name">Carrera</div>
+        <div class="tipo-card-top">
+          <div class="tipo-dot" style="background:#9B59B6;"></div>
+          <div class="tipo-name">Carrera</div>
+        </div>
         <div class="tipo-use">Distancias oficiales: 5K, 10K, media maratón, maratón (±3%).</div>
         <span class="tipo-chip" style="background:rgba(155,89,182,.12);color:#9B59B6;">trophy</span>
       </div>
       <div class="tipo-card">
-        <div class="tipo-dot" style="background:#D4A020;"></div>
-        <div class="tipo-name">Trail</div>
+        <div class="tipo-card-top">
+          <div class="tipo-dot" style="background:#D4A020;"></div>
+          <div class="tipo-name">Trail</div>
+        </div>
         <div class="tipo-use">Desnivel ≥ 100 m. Requiere datos de elevación desde Apple Health.</div>
         <span class="tipo-chip" style="background:rgba(212,160,32,.12);color:#D4A020;">≥ 100 m D+</span>
       </div>
@@ -766,8 +780,13 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
       </div>
       <div class="rm-card">
         <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
-        <h4>Vista de Calendario</h4>
-        <p>Heatmap mensual de actividad. Visualiza rachas, semanas de descarga y períodos de lesión de un vistazo.</p>
+        <h4>Rachas de entrenamiento</h4>
+        <p>Días consecutivos, semanas completas y récords personales de constancia. Visualiza tu historial de racha de un vistazo.</p>
+      </div>
+      <div class="rm-card">
+        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
+        <h4>Heatmap de actividad</h4>
+        <p>Mapa de calor mensual con intensidad por km. Identifica semanas de carga, descanso y períodos de lesión al instante.</p>
       </div>
     </div>
   </div>
