@@ -302,6 +302,7 @@ p.hero-sub { font-size: 17px; color: rgba(255,255,255,.48); line-height: 1.65; m
 /* ── ROADMAP ─────────────────────────────────────── */
 #roadmap { background: var(--bg-warm); border-top: 1px solid var(--line); }
 .rm-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 52px; }
+.rm-card.hot { background: var(--accent-soft); border-color: rgba(255,90,44,.25); }
 .rm-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 26px; }
 .rm-card.hot { background: var(--accent-soft); border-color: rgba(255,90,44,.25); }
 .rm-status { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
@@ -524,8 +525,8 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
         <div class="feat-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
-        <h3>Sin cuenta ni servidor</h3>
-        <p>Todo en tu iPhone, sincronizado por iCloud privado. Sin registro, sin suscripción obligatoria.</p>
+        <h3>Garmin · Apple Watch · cualquier reloj</h3>
+        <p>Importa desde Apple Salud: compatible con Garmin, Apple Watch, Polar, Suunto y cualquier dispositivo que sincronice con HealthKit.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon">
@@ -683,6 +684,20 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
     <div class="timeline">
 
       <div class="t-item now">
+        <div class="t-ver">Jul 2026</div>
+        <div class="t-dot"></div>
+        <div>
+          <div class="t-title">Auto-detección de entrenos + Garmin vía Apple Salud</div>
+          <div class="t-desc">La app detecta automáticamente cuando llega un entreno nuevo a Apple Salud — sin necesidad de abrirla. Compatible con Garmin: al sincronizar tu reloj con Garmin Connect, los datos pasan a Apple Salud y Runnio los importa al momento. Todos los entrenos aparecen sin límite de distancia ni duración.</div>
+          <div class="t-tags">
+            <span class="t-tag ok">Auto-detección HealthKit</span>
+            <span class="t-tag ok">Compatible con Garmin</span>
+            <span class="t-tag ok">Sin filtro de distancia</span>
+            <span class="t-tag now">Versión actual</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-item">
         <div class="t-ver">Jun 2026</div>
         <div class="t-dot"></div>
         <div>
@@ -693,7 +708,6 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
             <span class="t-tag ok">Eliminar entrenos</span>
             <span class="t-tag ok">Notif. inmediata</span>
             <span class="t-tag ok">Largo desde 5 km</span>
-            <span class="t-tag now">Versión actual</span>
           </div>
         </div>
       </div>
@@ -778,15 +792,15 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
         <h4>Widget de inicio</h4>
         <p>Zapatilla sugerida del día, anillo de desgaste y km de la semana en la pantalla de inicio de iOS.</p>
       </div>
+      <div class="rm-card hot">
+        <div class="rm-status" style="color:var(--accent);"><div class="rm-sdot" style="background:var(--accent);"></div>Próximamente</div>
+        <h4>Conexión directa con Garmin</h4>
+        <p>Importa tus entrenos directamente desde Garmin Connect sin pasar por Apple Salud. Sincronización instantánea en cuanto termines de correr.</p>
+      </div>
       <div class="rm-card">
         <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
         <h4>Rachas de entrenamiento</h4>
         <p>Días consecutivos, semanas completas y récords personales de constancia. Visualiza tu historial de racha de un vistazo.</p>
-      </div>
-      <div class="rm-card">
-        <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
-        <h4>Heatmap de actividad</h4>
-        <p>Mapa de calor mensual con intensidad por km. Identifica semanas de carga, descanso y períodos de lesión al instante.</p>
       </div>
     </div>
   </div>
