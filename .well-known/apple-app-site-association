@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "4AMW37753H.com.runnio.app",
+        "paths": ["/strava-callback", "/strava-callback/*"]
+      }
+    ]
+  }
+}

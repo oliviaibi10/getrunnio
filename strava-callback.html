@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conectando con Strava — Runnio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #181512;
+  --accent: #FF5A2C;
+  --sub: rgba(255,255,255,.55);
+  --font: 'Hanken Grotesk', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 380px; }
+.logo { font-weight: 900; font-size: 22px; letter-spacing: -0.5px; margin-bottom: 28px; }
+.logo em { font-style: normal; color: var(--accent); }
+.spinner {
+  width: 34px; height: 34px; margin: 0 auto 24px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+h1 { font-size: 19px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 10px; }
+p { font-size: 14.5px; color: var(--sub); line-height: 1.6; margin-bottom: 22px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo">runn<em>io</em></div>
+    <div class="spinner" id="spinner"></div>
+    <h1 id="title">Terminando de conectar Strava…</h1>
+    <p id="subtitle">Esto debería abrir Runnio automáticamente. Si no pasa nada en unos segundos, cierra esta pestaña y abre la app a mano — tu cuenta ya ha quedado autorizada.</p>
+  </div>
+  <script>
+    // Runnio intercepta esta URL como enlace universal (ver PACE.entitlements) y no debería
+    // llegar a cargarse casi nunca — esto es solo la red de seguridad para cuando esa
+    // intercepción falla (p. ej. justo después de instalar la app en un iPhone nuevo, antes de
+    // que iOS haya verificado el dominio asociado). El "code" de Strava ya se procesó del lado
+    // de Strava; aquí no hay nada que hacer salvo guiar de vuelta a la app a mano (no hay
+    // esquema propio tipo runnio:// registrado todavía, así que no se puede reabrir sola).
+    setTimeout(function () {
+      document.getElementById('title').textContent = 'Vuelve a Runnio para terminar';
+      document.getElementById('subtitle').textContent = 'Cierra esta pestaña y abre la app a mano — tu cuenta de Strava ya ha quedado autorizada.';
+      document.getElementById('spinner').style.display = 'none';
+    }, 4000);
+  </script>
+</body>
+</html>
