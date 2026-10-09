@@ -39,7 +39,9 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 h1 { font-size: 19px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 10px; }
-p { font-size: 14.5px; color: var(--sub); line-height: 1.6; margin-bottom: 22px; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-weight: 800; font-size: 16px; padding: 15px 28px; border-radius: 16px; }
+    p { font-size: 14.5px; color: var(--sub); line-height: 1.6; margin-bottom: 22px; }
 </style>
 </head>
 <body>
@@ -47,20 +49,50 @@ p { font-size: 14.5px; color: var(--sub); line-height: 1.6; margin-bottom: 22px;
     <div class="logo">runn<em>io</em></div>
     <div class="spinner" id="spinner"></div>
     <h1 id="title">Terminando de conectar Strava…</h1>
-    <p id="subtitle">Esto debería abrir Runnio automáticamente. Si no pasa nada en unos segundos, cierra esta pestaña y abre la app a mano — tu cuenta ya ha quedado autorizada.</p>
+    <p id="subtitle">Volviendo a Runnio…</p>
+    <a class="btn" id="open" href="#" style="display:none">Abrir Runnio</a>
   </div>
   <script>
-    // Runnio intercepta esta URL como enlace universal (ver PACE.entitlements) y no debería
-    // llegar a cargarse casi nunca — esto es solo la red de seguridad para cuando esa
-    // intercepción falla (p. ej. justo después de instalar la app en un iPhone nuevo, antes de
-    // que iOS haya verificado el dominio asociado). El "code" de Strava ya se procesó del lado
-    // de Strava; aquí no hay nada que hacer salvo guiar de vuelta a la app a mano (no hay
-    // esquema propio tipo runnio:// registrado todavía, así que no se puede reabrir sola).
-    setTimeout(function () {
-      document.getElementById('title').textContent = 'Vuelve a Runnio para terminar';
-      document.getElementById('subtitle').textContent = 'Cierra esta pestaña y abre la app a mano — tu cuenta de Strava ya ha quedado autorizada.';
-      document.getElementById('spinner').style.display = 'none';
-    }, 4000);
+    // Normalmente Runnio intercepta esta URL como enlace universal y esta página ni se ve. Si se
+    // ve (p. ej. sin la app de Strava instalada la autorización va por Safari y la redirección
+    // final no siempre abre la app), hay que devolverle a Runnio el "code" de Strava: sin él la
+    // conexión NO se completa. Se hace por el esquema propio runnio:// (Runnio 1.6.1+).
+    (function () {
+      var en = (navigator.language || '').toLowerCase().indexOf('en') === 0;
+      var t = en ? {
+        title: 'Back to Runnio', sub: 'Tap the button to finish connecting Strava.',
+        btn: 'Open Runnio', cancelTitle: 'Connection cancelled',
+        cancelSub: 'You can connect Strava again from Runnio whenever you like.',
+        update: 'If nothing happens, update Runnio from the App Store and connect again.'
+      } : {
+        title: 'Vuelve a Runnio', sub: 'Pulsa el botón para terminar de conectar Strava.',
+        btn: 'Abrir Runnio', cancelTitle: 'Conexión cancelada',
+        cancelSub: 'Puedes volver a conectar Strava desde Runnio cuando quieras.',
+        update: 'Si no pasa nada, actualiza Runnio desde la App Store y vuelve a conectar.'
+      };
+      var params = new URLSearchParams(window.location.search);
+      var appURL = 'runnio://strava-callback' + window.location.search;
+      var btn = document.getElementById('open');
+      btn.href = appURL;
+      btn.textContent = t.btn;
+
+      if (params.get('error')) {
+        // El botón también avisa a la app, que muestra "Has cancelado la conexión".
+        document.getElementById('title').textContent = t.cancelTitle;
+        document.getElementById('subtitle').textContent = t.cancelSub;
+        document.getElementById('spinner').style.display = 'none';
+        btn.style.display = 'inline-block';
+        return;
+      }
+      // Intento automático; Safari puede pedir confirmación ("¿Abrir en Runnio?").
+      window.location.href = appURL;
+      setTimeout(function () {
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('subtitle').textContent = t.sub + ' ' + t.update;
+        document.getElementById('spinner').style.display = 'none';
+        btn.style.display = 'inline-block';
+      }, 1500);
+    })();
   </script>
 </body>
 </html>
