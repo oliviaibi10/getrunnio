@@ -76,11 +76,10 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
 <div class="content">
   <div class="wrap">
     <h1>Política de Privacidad</h1>
-    <div class="updated">Última actualización: junio de 2026</div>
+    <div class="updated">Última actualización: octubre de 2026</div>
 
     <h2>Tu privacidad importa</h2>
-    <p>Runnio almacena tus datos en tu dispositivo y los sincroniza entre tus propios dispositivos Apple mediante iCloud. Nunca se envía información a servidores de Runnio ni a terceros, salvo lo indicado en la sección de compras.</p>
-
+    <p>Runnio almacena tus zapatillas, entrenos y preferencias en tu dispositivo y los sincroniza entre tus propios dispositivos Apple mediante iCloud. No hay cuentas de usuario, ni analíticas, ni publicidad. Runnio solo usa un servidor propio en dos casos, descritos abajo: si conectas Strava (para avisarte de entrenos nuevos) y para descargar el catálogo de zapatillas.</p>
     <hr />
 
     <h2>Datos que almacena la app</h2>
@@ -106,9 +105,24 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
       <li>Frecuencia cardíaca media del entrenamiento</li>
       <li>Distancia andando/corriendo</li>
       <li>Velocidad de carrera (para calcular el ritmo)</li>
+      <li>Energía activa (calorías) del entrenamiento</li>
     </ul>
-    <p>La app <strong>nunca escribe datos en Apple Salud</strong>. Los datos de salud se usan exclusivamente para mostrarte tus estadísticas dentro de la app y nunca se envían fuera del dispositivo.</p>
+    <p>La app <strong>nunca escribe datos en Apple Salud</strong>. Los datos de salud se usan exclusivamente para mostrarte tus estadísticas dentro de la app y nunca se envían a servidores de Runnio.</p>
     <p>Puedes revocar este permiso en: <em>Ajustes → Salud → Acceso a datos y dispositivos → Runnio.</em></p>
+
+    <hr />
+
+    <h2>Strava (opcional)</h2>
+    <p>Si decides conectar tu cuenta de Strava, Runnio lee de Strava tus actividades de carrera, senderismo y caminata (fecha, distancia, duración, ritmo, desnivel, ruta, frecuencia cardíaca, calorías y parciales por kilómetro) para mostrarlas en la app.</p>
+    <p>Para avisarte con una notificación en cuanto subes un entreno, nuestro servidor (<em>api.getrunnio.app</em>) guarda únicamente: tu identificador de atleta de Strava, el acceso a tu cuenta de Strava (tokens) y el identificador de notificaciones de tu iPhone. No guarda tus entrenos ni tus datos de salud, y no se usan para nada más.</p>
+    <p>Además, para saber cuántas personas distintas han conectado Strava (la API de Strava limita ese número), se guarda un código irreversible (hash) de tu identificador de atleta, sin nombre ni datos de contacto.</p>
+    <p>Puedes desconectar Strava en cualquier momento desde Ajustes de Runnio, y se borran de nuestro servidor los datos de la conexión. También puedes revocar el acceso desde la configuración de tu cuenta de Strava. Strava tiene su propia política de privacidad: <a href="https://www.strava.com/legal/privacy" target="_blank">strava.com/legal/privacy</a>.</p>
+
+    <hr />
+
+    <h2>Catálogo de zapatillas y notificaciones</h2>
+    <p>La app descarga de nuestro servidor el catálogo de modelos de zapatillas y sus fotos (imágenes de producto de sus marcas). Esa petición no incluye ningún dato tuyo, más allá de los datos técnicos que acompañan a cualquier conexión a internet.</p>
+    <p>Las notificaciones locales (recordatorios, alertas de desgaste, récords) se programan en tu dispositivo. Para las notificaciones de Strava se usa el servicio de notificaciones push de Apple.</p>
 
     <hr />
 
@@ -184,7 +198,8 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
       <li>Runnio es una aplicación independiente, no afiliada a Apple Inc.</li>
       <li>Apple, iPhone, Apple Watch, Apple Health y iCloud son marcas registradas de Apple Inc.</li>
       <li>Las compras se procesan a través de la App Store de Apple.</li>
-      <li>Runnio no recopila, almacena ni procesa datos personales en servidores propios.</li>
+      <li>Salvo lo descrito en las secciones de Strava y del catálogo, Runnio no recopila, almacena ni procesa tus datos personales en servidores propios.</li>
+      <li>Strava es una marca de Strava, Inc.</li>
       <li>Al usar la app aceptas la política de privacidad descrita anteriormente.</li>
     </ul>
 
@@ -216,7 +231,8 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
       <ul class="footer-links">
         <li><a href="/privacidad">Política de privacidad</a></li>
         <li><a href="/">getrunnio.app</a></li>
-        <li><a href="#">App Store</a></li>
+        <li><a href="/terminos">Términos de uso</a></li>
+        <li><a href="https://apps.apple.com/es/app/id6780606573">App Store</a></li>
       </ul>
       <div class="footer-copy">© 2026 Runnio · iOS</div>
     </div>
