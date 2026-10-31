@@ -273,7 +273,10 @@ p.hero-sub { font-size: 17px; color: rgba(255,255,255,.48); line-height: 1.65; m
 
 /* ── PRICING ─────────────────────────────────────── */
 #pricing { border-top: 1px solid var(--line); }
-.pricing-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; max-width: 1040px; }
+.pricing-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 52px; max-width: 1160px; }
+.p-card { position: relative; }
+.p-card.best { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.p-badge { position: absolute; top: -12px; left: 24px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--r-pill); }
 .p-card { border-radius: var(--r); padding: 32px; border: 1px solid var(--line); background: var(--card); }
 .p-card.pro { background: var(--dark); border-color: rgba(255,90,44,.2); }
 .p-tier { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
@@ -340,6 +343,7 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
 .footer-copy { font-size: 11.5px; color: rgba(255,255,255,.2); }
 
 /* ── MOBILE ──────────────────────────────────────── */
+@media (max-width: 1100px) { .pricing-row { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 768px) {
   .wrap { padding: 0 20px; }
   .sec { padding: 64px 0; }
@@ -680,10 +684,23 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
         </ul>
       </div>
       <div class="p-card pro">
-        <div class="p-tier">Pro</div>
+        <div class="p-tier">Pro · Mensual</div>
         <div class="p-price" style="font-size:32px;margin-bottom:4px;">2,99 €<span style="font-size:15px;font-weight:500;opacity:.5;">/mes</span></div>
+        <div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:22px;">7 días de prueba gratis · cancela cuando quieras</div>
+        <ul class="p-list">
+          <li><div class="p-dot"></div>Zapatillas ilimitadas</li>
+          <li><div class="p-dot"></div>Auto-clasificación de entrenos</li>
+          <li><div class="p-dot"></div>Stats completas y gráfico semanal</li>
+          <li><div class="p-dot"></div>Rotación inteligente</li>
+          <li><div class="p-dot"></div>Todas las notificaciones</li>
+          <li><div class="p-dot"></div>Year in Runnio</li>
+        </ul>
+      </div>
+      <div class="p-card pro best">
+        <div class="p-badge">Ahorra 4 meses</div>
+        <div class="p-tier">Pro · Anual</div>
         <div class="p-price" style="font-size:32px;margin-bottom:4px;">17,99 €<span style="font-size:15px;font-weight:500;opacity:.5;">/año</span></div>
-        <div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:22px;">El plan anual ahorra 4 meses</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:22px;">7 días de prueba gratis · equivale a 1,50 €/mes</div>
         <ul class="p-list">
           <li><div class="p-dot"></div>Zapatillas ilimitadas</li>
           <li><div class="p-dot"></div>Auto-clasificación de entrenos</li>
@@ -827,90 +844,11 @@ footer { background: var(--dark); padding: 40px 0; border-top: 1px solid rgba(25
       <div class="rm-card">
         <div class="rm-status" style="color:var(--sub);"><div class="rm-sdot" style="background:var(--line);"></div>Próximo</div>
         <h4>iPhone Dúo</h4>
-        <p>Runnio adaptado al iPhone Dúo.</p>
+        <p>Runnio disponible para el nuevo iPhone Dúo.</p>
       </div>
     </div>
   </div>
 </section>
-
-<!-- PRIVACY STRIP -->
-<div class="priv-strip">
-  <div class="wrap">
-    <div class="sec-label" style="color:rgba(255,90,44,.7);margin-bottom:10px;">Privacidad</div>
-    <h2 class="h" style="color:#fff;margin-bottom:6px;">Tus datos, en tu<br>dispositivo y tu iCloud.</h2>
-    <p style="font-size:16px;color:rgba(255,255,255,.38);margin-bottom:40px;max-width:480px;line-height:1.6;">Sin cuenta, sin analíticas y sin anuncios. Solo si conectas Strava, un servidor mínimo nuestro guarda lo necesario para avisarte de entrenos nuevos.</p>
-
-    <div class="priv-table-wrap">
-      <table class="priv-table">
-        <thead>
-          <tr>
-            <th>Qué</th>
-            <th>Dónde</th>
-            <th>Quién tiene acceso</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Zapatillas y entrenamientos</td>
-            <td>iCloud Private Database (CloudKit)</td>
-            <td>Solo tú</td>
-          </tr>
-          <tr>
-            <td>Preferencias y ajustes</td>
-            <td>iCloud Key-Value Store</td>
-            <td>Solo tú, sincronizado entre dispositivos</td>
-          </tr>
-          <tr>
-            <td>Fotos de zapatillas</td>
-            <td>iCloud Private Database (CloudKit)</td>
-            <td>Solo tú</td>
-          </tr>
-          <tr>
-            <td>Datos de Apple Salud</td>
-            <td>Solo se leen (entrenos, frecuencia cardíaca y calorías), nunca se escribe en Salud</td>
-            <td>Solo tú</td>
-          </tr>
-          <tr>
-            <td>Strava (opcional)</td>
-            <td>Tu identificador y acceso a Strava, y el identificador de notificaciones de tu iPhone, en nuestro servidor, solo para avisarte de entrenos nuevos</td>
-            <td>Solo Runnio, hasta que desconectes Strava</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="priv-pills">
-      <div class="priv-pill">
-        <div class="priv-pill-icon">⟿</div>
-        <div>
-          <strong>Sin cuenta de usuario</strong>
-          <p>No necesitas registrarte ni dar tu email. La app funciona desde el primer segundo.</p>
-        </div>
-      </div>
-      <div class="priv-pill">
-        <div class="priv-pill-icon">⊘</div>
-        <div>
-          <strong>Servidor mínimo, solo para Strava</strong>
-          <p>Tus zapatillas y entrenos no pasan por ningún servidor nuestro. Solo existe uno para los avisos de Strava y para el catálogo de zapatillas.</p>
-        </div>
-      </div>
-      <div class="priv-pill">
-        <div class="priv-pill-icon">⌁</div>
-        <div>
-          <strong>Privacidad real</strong>
-          <p>Runnio no puede leer tus entrenos ni tus zapatillas: están en tu iCloud privado.</p>
-        </div>
-      </div>
-      <div class="priv-pill">
-        <div class="priv-pill-icon">✕</div>
-        <div>
-          <strong>Eliminar todo</strong>
-          <p>Borra la app y tus datos locales desaparecen. Para iCloud: Ajustes → tu nombre → iCloud → Gestionar almacenamiento → Runnio.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
