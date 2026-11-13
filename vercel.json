@@ -5,8 +5,53 @@
     {
       "source": "/.well-known/apple-app-site-association",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/privacidad",
+      "destination": "https://mugsy.studio/privacidad#runnio",
+      "permanent": true
+    },
+    {
+      "source": "/privacidad.html",
+      "destination": "https://mugsy.studio/privacidad#runnio",
+      "permanent": true
+    },
+    {
+      "source": "/terminos",
+      "destination": "https://mugsy.studio/terminos",
+      "permanent": true
+    },
+    {
+      "source": "/terminos.html",
+      "destination": "https://mugsy.studio/terminos",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "https://mugsy.studio/en/terms",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "https://mugsy.studio/en/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "https://mugsy.studio/en/privacy#runnio",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "https://mugsy.studio/en/privacy#runnio",
+      "permanent": true
     }
   ]
 }
